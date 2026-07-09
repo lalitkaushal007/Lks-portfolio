@@ -10,15 +10,15 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
     <script type="text/javascript">
-window.$crisp=[];window.CRISP_WEBSITE_ID="5ae5e0d2-214d-4b24-9902-801aff4e3fa0";
-(function(){
-d=document;s=d.createElement("script");
-s.src="https://client.crisp.chat/l.js";s.async=1;
-d.getElementsByTagName("head")[0].appendChild(s);
-})();
-</script>
+        window.$crisp = []; window.CRISP_WEBSITE_ID = "5ae5e0d2-214d-4b24-9902-801aff4e3fa0";
+        (function () {
+            d = document; s = d.createElement("script");
+            s.src = "https://client.crisp.chat/l.js"; s.async = 1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
 
-        <script src="./script.js"></script>
+    <script src="./script.js"></script>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -33,6 +33,7 @@ d.getElementsByTagName("head")[0].appendChild(s);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --glow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
+
         #fluid {
             position: fixed;
             top: 0;
@@ -43,7 +44,7 @@ d.getElementsByTagName("head")[0].appendChild(s);
             z-index: 5;
             opacity: 0.7;
         }
-        
+
         .dark-mode {
             --primary-color: #3b82f6;
             --secondary-color: #60a5fa;
@@ -71,7 +72,7 @@ d.getElementsByTagName("head")[0].appendChild(s);
             overflow-x: hidden;
             scroll-behavior: smooth;
             transition: background 0.5s ease, color 0.5s ease;
-            
+
         }
 
         .container {
@@ -116,12 +117,12 @@ d.getElementsByTagName("head")[0].appendChild(s);
         /* Theme Toggle Button */
         .theme-toggle {
             position: fixed;
-            bottom: 19px;
-            right: 22px;
+            bottom: 10px;
+            left: 10px;
             z-index: 1000;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 30%;
             background: var(--gradient);
             color: white;
             display: flex;
@@ -130,8 +131,8 @@ d.getElementsByTagName("head")[0].appendChild(s);
             cursor: pointer;
             box-shadow: var(--shadow);
             border: none;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            transition: all 1s ease;
         }
 
         .theme-toggle:hover {
@@ -812,10 +813,7 @@ d.getElementsByTagName("head")[0].appendChild(s);
 </head>
 
 <body>
-   <canvas id="fluid"></canvas>
-    <!-- Theme Toggle Button -->
-
-
+    <canvas id="fluid"></canvas>
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
@@ -832,9 +830,7 @@ d.getElementsByTagName("head")[0].appendChild(s);
                         <li><a href="#experience">Experience</a></li>
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#contact">Contact</a></li>
-                            <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
+
                     </ul>
                 </nav>
 
@@ -851,7 +847,11 @@ d.getElementsByTagName("head")[0].appendChild(s);
     <section id="home" class="hero">
         <div id="canvas-container"></div>
         <div class="container">
+
             <div class="hero-content">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <div class="hero-text">
                     <h1>Lalit Kaushal</h1>
                     <h2>Software Developer...</h2>
@@ -862,7 +862,8 @@ d.getElementsByTagName("head")[0].appendChild(s);
                     </p>
                     <div class="hero-buttons">
                         <a href="#projects" class="btn">View My Work</a>
-                        <a href="https://drive.google.com/uc?export=download&id=1-0kEMsRIgTFb2Ra3x-YQLpSPKygZDBGu" class="btn btn-outline" download="My_Resume.pdf">Resume</a>
+                        <a href="https://drive.google.com/uc?export=download&id=1-0kEMsRIgTFb2Ra3x-YQLpSPKygZDBGu"
+                            class="btn btn-outline" download="My_Resume.pdf">Resume</a>
 
                     </div>
                     <div class="social-links">
@@ -895,15 +896,15 @@ d.getElementsByTagName("head")[0].appendChild(s);
     <section id="about" class="section">
         <div class="container">
             <div class="cube-container">
-            <div class="cube">
-                <div class="cube-face cube-face-front"><i class="fas fa-database"></i></div>
-                <div class="cube-face cube-face-back"><i class="fas fa-code"></i></div>
-                <div class="cube-face cube-face-right"><i class="fas fa-cloud"></i></div>
-                <div class="cube-face cube-face-left"><i class="fas fa-mobile"></i></div>
-                <div class="cube-face cube-face-top"><i class="fas fa-desktop"></i></div>
-                <div class="cube-face cube-face-bottom"><i class="fas fa-server"></i></div>
+                <div class="cube">
+                    <div class="cube-face cube-face-front"><i class="fas fa-database"></i></div>
+                    <div class="cube-face cube-face-back"><i class="fas fa-code"></i></div>
+                    <div class="cube-face cube-face-right"><i class="fas fa-cloud"></i></div>
+                    <div class="cube-face cube-face-left"><i class="fas fa-mobile"></i></div>
+                    <div class="cube-face cube-face-top"><i class="fas fa-desktop"></i></div>
+                    <div class="cube-face cube-face-bottom"><i class="fas fa-server"></i></div>
+                </div>
             </div>
-        </div>
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.2rem;">
@@ -986,7 +987,7 @@ d.getElementsByTagName("head")[0].appendChild(s);
 
     <!-- Experience Section -->
     <section id="experience" class="section experience">
-       
+
         <div class="container">
             <h2 class="section-title">Experience</h2>
             <div class="timeline">
@@ -1231,8 +1232,3 @@ d.getElementsByTagName("head")[0].appendChild(s);
 
 
 </html>
-
-
-
-
-
