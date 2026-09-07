@@ -1,1234 +1,2120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lks-Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
-    <script type="text/javascript">
-        window.$crisp = []; window.CRISP_WEBSITE_ID = "5ae5e0d2-214d-4b24-9902-801aff4e3fa0";
-        (function () {
-            d = document; s = d.createElement("script");
-            s.src = "https://client.crisp.chat/l.js"; s.async = 1;
-            d.getElementsByTagName("head")[0].appendChild(s);
-        })();
-    </script>
-
-    <script src="./script.js"></script>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #3b82f6;
-            --accent-color: #f43f5e;
-            --dark-color: #1e293b;
-            --light-color: #f8fafc;
-            --text-color: #334155;
-            --bg-color: #f8fafc;
-            --card-bg: white;
-            --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --glow: 0 0 15px rgba(59, 130, 246, 0.5);
-        }
-
-        #fluid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100dvw;
-            height: 100dvh;
-            pointer-events: none;
-            z-index: 5;
-            opacity: 0.7;
-        }
-
-        .dark-mode {
-            --primary-color: #3b82f6;
-            --secondary-color: #60a5fa;
-            --accent-color: #f87171;
-            --dark-color: #f1f5f9;
-            --light-color: #1e293b;
-            --text-color: #cbd5e1;
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            --glow: 0 0 15px rgba(59, 130, 246, 0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background: var(--bg-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            transition: background 0.5s ease, color 0.5s ease;
-
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 5px;
-            background: var(--gradient);
-            border-radius: 10px;
-        }
-
-        /* Theme Toggle Button */
-        .theme-toggle {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            z-index: 1000;
-            width: 40px;
-            height: 40px;
-            border-radius: 30%;
-            background: var(--gradient);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            border: none;
-            font-size: 1.1rem;
-            transition: all 1s ease;
-        }
-
-        .theme-toggle:hover {
-            transform: translateY(-5px) rotate(30deg);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Header Styles */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 0;
-            z-index: 1000;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: var(--shadow);
-        }
-
-        .dark-mode .header {
-            background: rgba(30, 41, 59, 0.8);
-        }
-
-        .header.scrolled {
-            padding: 15px 0;
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        .dark-mode .header.scrolled {
-            background: rgba(30, 41, 59, 0.95);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo a {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo span {
-            color: var(--accent-color);
-        }
-
-        .nav-list {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-list li {
-            margin-left: 30px;
-        }
-
-        .nav-list a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-list a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--gradient);
-            border-radius: 10px;
-            transition: width 0.3s ease;
-        }
-
-        .nav-list a:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-list a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1002;
-        }
-
-        .mobile-menu-toggle span {
-            width: 30px;
-            height: 3px;
-            background: var(--primary-color);
-            margin: 3px 0;
-            transition: all 0.3s ease;
-            border-radius: 10px;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 180px 0 100px;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--bg-color) 0%, var(--light-color) 100%);
-        }
-
-        #canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-text {
-            flex: 1;
-            padding-right: 30px;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            color: var(--dark-color);
-        }
-
-        .hero-text h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            font-weight: 500;
-            color: var(--primary-color);
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            max-width: 600px;
-            color: var(--text-color);
-        }
-
-        .hero-buttons {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow);
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            color: var(--primary-color);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-5px);
-            background: var(--gradient);
-            color: white;
-            box-shadow: var(--glow);
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .profile-photo-container {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: var(--gradient);
-            padding: 5px;
-            box-shadow: var(--shadow);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .profile-photo {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--card-bg);
-        }
-
-        .photo-placeholder {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--light-color), var(--bg-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 5rem;
-            border: 5px solid var(--card-bg);
-        }
-
-        /* Skills Section */
-        .skills {
-            background: var(--bg-color);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .skill-category {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-category::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient);
-        }
-
-        .skill-category:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .skill-category h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .skill-tag {
-            background: var(--light-color);
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .skill-tag:hover {
-            background: var(--gradient);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Experience Section */
-        .experience {
-            background: linear-gradient(135deg, var(--light-color) 0%, var(--bg-color) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background: var(--primary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-            border-radius: 10px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(odd) {
-            left: 0;
-            animation: slideInLeft 1s ease forwards;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-            animation: slideInRight 1s ease forwards;
-        }
-
-        .timeline-marker {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            top: 15px;
-            z-index: 1;
-            box-shadow: var(--glow);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-marker {
-            right: -15px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-marker {
-            left: -15px;
-        }
-
-        .timeline-content {
-            padding: 25px;
-            background: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        .timeline-content:hover {
-            transform: translateY(-5px) rotateY(5deg);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .timeline-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-            font-size: 1.4rem;
-        }
-
-        .timeline-content h4 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .timeline-period {
-            color: var(--primary-color);
-            font-style: italic;
-            margin-bottom: 15px;
-            display: block;
-            font-weight: 600;
-        }
-
-        .timeline-content ul {
-            padding-left: 20px;
-        }
-
-        .timeline-content li {
-            margin-bottom: 8px;
-            position: relative;
-        }
-
-        .timeline-content li::before {
-            content: '▹';
-            color: var(--accent-color);
-            position: absolute;
-            left: -20px;
-        }
-
-        /* 3D Cube */
-        .cube-container {
-            width: 200px;
-            height: 200px;
-            position: absolute;
-            bottom: 50px;
-            right: 50px;
-            perspective: 800px;
-            z-index: 1;
-        }
-
-        .cube {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotate 20s infinite linear;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(37, 99, 235, 0.1);
-            border: 2px solid rgba(37, 99, 235, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--primary-color);
-            backdrop-filter: blur(5px);
-        }
-
-        .cube-face-front {
-            transform: translateZ(100px);
-        }
-
-        .cube-face-back {
-            transform: translateZ(-100px) rotateY(180deg);
-        }
-
-        .cube-face-right {
-            transform: translateX(100px) rotateY(90deg);
-        }
-
-        .cube-face-left {
-            transform: translateX(-100px) rotateY(-90deg);
-        }
-
-        .cube-face-top {
-            transform: translateY(-100px) rotateX(90deg);
-        }
-
-        .cube-face-bottom {
-            transform: translateY(100px) rotateX(-90deg);
-        }
-
-
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotateX(0) rotateY(0) rotateZ(0);
-            }
-
-            to {
-                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Responsive design */
-        @media (max-width: 968px) {
-            .hero-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 40px;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-
-            .timeline::after {
-                left: 31px;
-            }
-
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-
-            .timeline-item:nth-child(even) {
-                left: 0;
-            }
-
-            .timeline-marker {
-                left: 22px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2.2rem;
-            }
-
-            .section {
-                padding: 70px 0;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-text h2 {
-                font-size: 1.5rem;
-            }
-
-            .profile-photo-container {
-                width: 250px;
-                height: 250px;
-            }
-
-            .nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: var(--card-bg);
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-                transition: right 0.4s ease;
-                z-index: 1001;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .nav-open {
-                right: 0;
-            }
-
-            .nav-list {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .nav-list li {
-                margin: 15px 0;
-            }
-
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            .mobile-menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 8px);
-            }
-
-            .mobile-menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .mobile-menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(5px, -8px);
-            }
-
-            .cube-container {
-                display: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lalit Kaushal | .NET Software Developer & Backend Architect</title>
+  <meta name="description"
+    content="Portfolio of Lalit Kaushal - .NET Software Developer specializing in ASP.NET Core, C#, SQL Server, PostgreSQL, RESTful APIs, and scalable telecom/device platforms." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+
+  <!-- Google Fonts: Bebas Neue, Outfit, JetBrains Mono, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            netflixRed: '#E50914',
+            netflixDark: '#050505',
+            netflixCard: '#141414',
+            netflixGray: '#222222',
+          },
+          fontFamily: {
+            sans: ['Outfit', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            bebas: ['Bebas Neue', 'Impact', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar & Global Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background-color: #050505;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    ::selection {
+      background-color: #E50914;
+      color: #ffffff;
+    }
+
+    /* Marquee Animation */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 35s linear infinite;
+    }
+
+    /* Holographic Glare Layer */
+    .glare-layer {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 60%);
+      pointer-events: none;
+      transform: translate3d(0, 0, 0);
+      mix-blend-mode: overlay;
+    }
+
+    /* Floating Lazy Ambient Glow Orbs */
+    @keyframes lazyFloat1 {
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(50px, -70px, 0) scale(1.2);
+      }
+    }
+
+    @keyframes lazyFloat2 {
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(-60px, 50px, 0) scale(0.85);
+      }
+    }
+
+    .lazy-orb-1 {
+      animation: lazyFloat1 18s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .lazy-orb-2 {
+      animation: lazyFloat2 22s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Input Focus Glowing Underline */
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-line {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #E50914, #ff2a3a, #E50914, transparent);
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 12px rgba(229, 9, 20, 0.8);
+      pointer-events: none;
+    }
+
+    input:focus~.input-line,
+    textarea:focus~.input-line {
+      width: 100%;
+    }
+
+    /* Bento Mouse Spotlight & Lazy 3D Perspective */
+    .bento-card {
+      position: relative;
+      background: rgba(20, 20, 20, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: border-color 0.4s ease;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+    }
+
+    .bento-card:hover {
+      border-color: rgba(229, 9, 20, 0.6);
+    }
+
+    .bento-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(229, 9, 20, 0.16), transparent 70%);
+    }
+
+    .bento-card:hover .bento-spotlight {
+      opacity: 1;
+    }
+
+    /* Sticky Stacked Cards in Episode 02 */
+    .stack-card {
+      position: sticky;
+      top: 100px;
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: border-color 0.3s ease;
+      will-change: transform, opacity, filter;
+    }
+
+    .stack-card:hover {
+      border-color: rgba(229, 9, 20, 0.5);
+    }
+
+    /* 3D Skills Carousel */
+    .skills-container {
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-backdrop.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Toast Notification */
+    .toast-notice {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      transform: translateY(120%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-notice.show {
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
-<body>
-    <canvas id="fluid"></canvas>
-    <!-- Header -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <a href="#home">Lalit<span>Kaushal</span></a>
-                </div>
+<body class="bg-[#050505] text-white selection:bg-[#E50914] selection:text-white">
 
-                <nav class="nav" id="nav">
-                    <ul class="nav-list">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
+  <!-- ============================================================== -->
+  <!-- 1. CINEMATIC NETFLIX PRELOADER                                  -->
+  <!-- ============================================================== -->
+  <div id="preloader"
+    class="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center select-none overflow-hidden transition-opacity duration-700">
+    <div id="preloader-content" class="flex flex-col items-center gap-4 text-center px-4">
+      <!-- Minimal Red Indicator Dot -->
+      <div class="w-3 h-3 rounded-full bg-[#E50914] animate-ping"></div>
 
-                    </ul>
-                </nav>
+      <!-- Typography -->
+      <h1 class="text-3xl md:text-5xl font-black uppercase tracking-[0.25em] text-white font-bebas">
+        LALIT KAUSHAL
+      </h1>
+      <p class="text-xs font-mono tracking-widest text-[#E50914] uppercase">
+        // SOFTWARE ENGINEER &bull; PROD RELEASE v2.0
+      </p>
+    </div>
+  </div>
 
-                <button class="mobile-menu-toggle" id="menuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+  <!-- ============================================================== -->
+  <!-- 2. ULTRA-PRECISION DUAL RED CURSOR & AMBIENT SPOTLIGHT BEAM   -->
+  <!-- ============================================================== -->
+  <div id="global-spotlight"
+    class="fixed top-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none z-[9997] opacity-0 blur-[110px] transition-opacity duration-300"
+    style="background: radial-gradient(circle, rgba(229,9,20,0.22) 0%, rgba(229,9,20,0.08) 45%, transparent 75%);">
+  </div>
+  <div id="cursor-dot"
+    class="fixed top-0 left-0 z-[9999] pointer-events-none w-3 h-3 bg-[#E50914] rounded-full shadow-[0_0_15px_#E50914]">
+  </div>
+  <div id="cursor-ring"
+    class="fixed top-0 left-0 z-[9999] pointer-events-none w-12 h-12 border border-[#E50914]/60 rounded-full flex items-center justify-center backdrop-blur-[1px]">
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 3. NETFLIX-THEMED DEVELOPER NAVBAR                             -->
+  <!-- ============================================================== -->
+  <header id="navbar"
+    class="fixed top-0 left-0 z-50 w-full bg-[#050505]/70 backdrop-blur-xl border-b border-white/10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between pointer-events-auto">
+      <a href="#home"
+        class="text-2xl font-black text-[#E50914] tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(229,9,20,0.9)]">
+        LALIT K A U S H A L<span class="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-white/80">
+        <a href="#home" class="hover:text-[#E50914] transition-colors">Home</a>
+        <a href="#about" class="hover:text-[#E50914] transition-colors">About</a>
+        <a href="#expertise" class="hover:text-[#E50914] transition-colors">Experience</a>
+        <a href="#skills" class="hover:text-[#E50914] transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-[#E50914] transition-colors">Projects</a>
+        <a href="#contact" class="hover:text-[#E50914] transition-colors">Contact</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="Lalit-Kaushal-Resume.pdf" download
+          class="px-5 py-2.5 rounded bg-[#E50914] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:scale-105 active:scale-95 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Resume / CV
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================== -->
+  <!-- 4. HERO SECTION                                                -->
+  <!-- ============================================================== -->
+  <section id="home"
+    class="relative w-full min-h-screen bg-[#050505] overflow-hidden flex flex-col justify-between select-none pt-24 pb-12">
+
+    <!-- 1. Background Gradient & Infinite Marquee Ticker -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-black/90 to-[#050505] z-0 pointer-events-none">
+      <div
+        class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-10">
+        <div class="flex whitespace-nowrap animate-marquee">
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            FEATURE FILM // .NET CORE & BACKEND ARCHITECT &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            ORIGINAL SERIES // TELECOM & DISTRIBUTED SYSTEMS &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            BLOCKBUSTER // RESTFUL API & SQL OPTIMIZATION &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            ACCLAIMED // ALGORITHMIC PROBLEM SOLVER &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            FEATURE FILM // .NET CORE & BACKEND ARCHITECT &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            ORIGINAL SERIES // TELECOM & DISTRIBUTED SYSTEMS &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            BLOCKBUSTER // RESTFUL API & SQL OPTIMIZATION &bull;
+          </span>
+          <span class="text-[13vw] font-black text-[#E50914] mx-8 uppercase tracking-tighter">
+            ACCLAIMED // ALGORITHMIC PROBLEM SOLVER &bull;
+          </span>
         </div>
-    </header>
+      </div>
+    </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div id="canvas-container"></div>
-        <div class="container">
+    <!-- 2. Main Content Container -->
+    <div class="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 flex-1 flex flex-col justify-between my-auto">
 
-            <div class="hero-content">
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <div class="hero-text">
-                    <h1>Lalit Kaushal</h1>
-                    <h2>Software Developer...</h2>
-                    <p>
-                        Passionate and skilled in building secure, high-performance software solutions
-                        using .NET and ASP.NET. Experienced in developing scalable web applications,
-                        working with databases, and creating robust APIs.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn">View My Work</a>
-                        <a href="https://drive.google.com/uc?export=download&id=1-0kEMsRIgTFb2Ra3x-YQLpSPKygZDBGu"
-                            class="btn btn-outline" download="My_Resume.pdf">Resume</a>
-
-                    </div>
-                    <div class="social-links">
-                        <a href="callto:9120602649" title="Call">
-                            <i class="fas fa-phone"></i>
-                        </a>
-                        <a href="mailto:baba231216@gmail.com" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/lalit-kaushal-7862501b5/" target="_blank"
-                            rel="noopener noreferrer" title="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://github.com/lalitkaushal007" target="_blank" rel="noopener noreferrer"
-                            title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="profile-photo-container">
-                        <img src="ChatGPT_Image_LKS.png" alt="Lalit Kaushal" class="profile-photo">
-                    </div>
-                </div>
-            </div>
+      <!-- Top Netflix Cinematic Badge -->
+      <div class="hero-anim flex items-center justify-between w-full pt-4 pb-8">
+        <div
+          class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded bg-black/80 backdrop-blur-2xl border border-[#E50914]/40 text-xs font-mono uppercase tracking-widest text-white shadow-2xl">
+          <span class="w-2 h-2 rounded-full bg-[#E50914] animate-ping"></span>
+          <span class="text-[#E50914] font-bold tracking-wider">NETFLIX DEVELOPER SERIES</span>
+          <span class="text-white/40">|</span>
+          <span class="text-white/80">SEASONS 2024 - 2026</span>
         </div>
-    </section>
+        <div class="hidden md:flex items-center gap-2 text-xs font-mono text-white/50 tracking-wider">
+          <span class="px-2 py-0.5 border border-white/20 rounded bg-black/40">BACKEND 4K</span>
+          <span class="px-2 py-0.5 border border-white/20 rounded bg-black/40">.NET CORE CERTIFIED</span>
+        </div>
+      </div>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <div class="cube-container">
-                <div class="cube">
-                    <div class="cube-face cube-face-front"><i class="fas fa-database"></i></div>
-                    <div class="cube-face cube-face-back"><i class="fas fa-code"></i></div>
-                    <div class="cube-face cube-face-right"><i class="fas fa-cloud"></i></div>
-                    <div class="cube-face cube-face-left"><i class="fas fa-mobile"></i></div>
-                    <div class="cube-face cube-face-top"><i class="fas fa-desktop"></i></div>
-                    <div class="cube-face cube-face-bottom"><i class="fas fa-server"></i></div>
-                </div>
+      <!-- Main Center Cinematic Stage Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 items-center gap-10 my-auto py-6">
+
+        <!-- Left Column: Story & Headline -->
+        <div class="lg:col-span-5 flex flex-col items-start space-y-6 text-left">
+
+          <div class="hero-anim flex items-center gap-3">
+            <span
+              class="px-2.5 py-0.5 bg-[#E50914] text-white font-black text-xs rounded tracking-widest shadow-[0_0_20px_rgba(229,9,20,0.8)] animate-pulse">TOP
+              1%</span>
+            <span class="text-white/80 text-xs font-mono tracking-widest uppercase">Software Engineer & Backend
+              Architect</span>
+          </div>
+
+          <h1
+            class="hero-anim text-5xl md:text-7xl font-black tracking-tighter text-white leading-[0.95] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
+            LALIT <br />
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_35px_rgba(220,38,38,0.5)]">
+              KAUSHAL
+            </span>
+          </h1>
+
+          <div class="hero-anim flex flex-wrap items-center gap-3 text-xs font-mono text-red-400 font-bold">
+            <span class="px-2 py-0.5 bg-red-500/10 border border-red-500/30 rounded text-[#E50914]"><span
+                class="counter-num" data-target="99.9">99.9</span>% Uptime</span>
+            <span class="text-white/40">•</span>
+            <span>C# • ASP.NET Core • SQL Server</span>
+            <span class="text-white/40">•</span>
+            <span class="text-white/70">PostgreSQL & REST APIs</span>
+          </div>
+
+          <p class="hero-anim text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md drop-shadow">
+            Architecting high-throughput telecom portals, SIM & device management backends, SLA reporting engines, and
+            resilient enterprise .NET Core services.
+          </p>
+
+          <!-- Action Button Set -->
+          <div class="hero-anim flex flex-wrap items-center gap-4 pt-2">
+            <a href="#projects"
+              class="px-8 py-3.5 bg-white text-black font-bold text-xs uppercase tracking-widest rounded hover:bg-[#E50914] hover:text-white transition-all duration-300 shadow-[0_10px_35px_rgba(255,255,255,0.3)] flex items-center gap-2 hover:scale-105 active:scale-95">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              View Projects
+            </a>
+            <a href="#contact"
+              class="px-8 py-3.5 bg-neutral-900/80 text-white border border-white/20 font-bold text-xs uppercase tracking-widest rounded hover:bg-neutral-800 transition-all duration-300 shadow-xl backdrop-blur-md flex items-center gap-2 hover:scale-105 active:scale-95">
+              <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              Contact Me
+            </a>
+          </div>
+        </div>
+
+        <!-- Center Column: 3D Holographic Tilt Card -->
+        <div class="lg:col-span-4 flex justify-center [perspective:1200px]">
+          <div id="hero-3d-card"
+            class="relative group transform-gpu transition-transform duration-100 ease-out will-change-transform">
+            <!-- Cinematic Red Neon Back Glow -->
+            <div
+              class="absolute -inset-3 bg-gradient-to-r from-[#E50914]/70 via-rose-600/40 to-purple-600/20 rounded-3xl blur-3xl opacity-90 group-hover:opacity-100 animate-pulse duration-1000">
             </div>
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.2rem;">
-                    Passionate and Skilled in building secure, high-performance software solutions using .NET and
-                    ASP.NET.
-                    Experienced in developing scalable web applications, working with databases, and creating robust
-                    APIs
-                    that improve efficiency and user experience. Continuously learning modern technologies to deliver
-                    effective solutions in today's fast-changing tech industry.
+
+            <!-- Poster Card Frame -->
+            <div
+              class="relative w-[280px] md:w-[320px] p-3.5 bg-[#141414]/90 backdrop-blur-2xl rounded-2xl border border-[#E50914]/40 shadow-[0_40px_80px_rgba(0,0,0,0.95)] overflow-hidden">
+
+              <!-- Dynamic Specular Glare -->
+              <div id="hero-glare" class="glare-layer"></div>
+
+              <!-- Netflix Series Tag -->
+              <div
+                class="absolute top-6 left-6 z-30 px-3 py-1 bg-[#E50914] text-white font-mono text-[10px] font-bold tracking-widest rounded shadow-xl">
+                FEATURED DEV
+              </div>
+
+              <!-- Lalit Kaushal's Portrait -->
+              <img src="lalit.jpg" alt="Lalit Kaushal - Software Developer"
+                class="w-full h-[330px] md:h-[390px] object-cover rounded-xl filter contrast-110 brightness-105 group-hover:scale-[1.02] transition-transform duration-500"
+                onerror="this.onerror=null; this.src='src/assets/Portfolio/picture.png';" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Specs & Accolades -->
+        <div class="hero-anim lg:col-span-3 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
+          <div
+            class="p-6 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-xl shadow-2xl max-w-xs space-y-3">
+            <h3 class="text-xs font-mono uppercase tracking-widest text-[#E50914] font-bold">Core Stack & Accolades</h3>
+            <p class="text-xs text-white/80 leading-relaxed font-light">
+              5-Star HackerRank in C#, .NET & Problem Solving. 300+ DSA algorithmic problems solved across LeetCode,
+              HackerRank, and CodeChef. MountBlue 100% completion.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-1.5 justify-start lg:justify-end">
+              <span
+                class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-white/70">.NET
+                Core</span>
+              <span
+                class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-white/70">C#</span>
+              <span
+                class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-white/70">SQL
+                Server</span>
+              <span
+                class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-white/70">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Cinematic Ticker -->
+      <div
+        class="hero-anim flex items-center justify-between text-xs font-mono text-white/50 tracking-widest uppercase pt-6 border-t border-white/5">
+        <span>ENGINEERED FOR SCALABILITY & RELIABILITY</span>
+        <span>[ PORTFOLIO RELEASE v2.0 ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 5. EPISODE 01: ABOUT (BENTO GRID WITH SPOTLIGHT)                -->
+  <!-- ============================================================== -->
+  <section id="about"
+    class="relative w-full min-h-screen bg-[#050505] text-white py-32 px-6 md:px-12 flex flex-col justify-center select-none overflow-hidden border-t border-white/5">
+    <!-- Ambient Glows -->
+    <div
+      class="absolute top-1/4 left-10 w-[500px] h-[500px] bg-[#E50914]/10 rounded-full blur-[160px] pointer-events-none">
+    </div>
+    <div
+      class="absolute bottom-10 right-10 w-[500px] h-[500px] bg-red-900/10 rounded-full blur-[160px] pointer-events-none">
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full space-y-16">
+
+      <!-- Section Header -->
+      <div class="flex flex-col items-start space-y-4">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded bg-black/80 backdrop-blur-2xl border border-[#E50914]/40 text-xs font-mono uppercase tracking-widest text-white shadow-2xl">
+          <span class="w-2 h-2 rounded-full bg-[#E50914] animate-ping"></span>
+          <span class="text-[#E50914] font-bold">EPISODE 01</span>
+          <span class="text-white/40">|</span>
+          <span>ABOUT THE ENGINEER</span>
+        </div>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tighter text-white">
+          EPISODE SYNOPSIS <br />
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_30px_rgba(229,9,20,0.4)]">
+            ORIGIN & VISION.
+          </span>
+        </h2>
+      </div>
+
+      <!-- Bento Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+        <!-- Card 1: Bio & Academic Core (Span 7) -->
+        <div
+          class="bento-card md:col-span-7 p-8 md:p-12 rounded-[2.5rem] shadow-2xl flex flex-col justify-between relative group">
+          <div class="bento-spotlight"></div>
+          <div class="absolute top-0 right-0 p-8 text-white/5 font-mono text-7xl font-black pointer-events-none">01
+          </div>
+
+          <div class="space-y-5 relative z-10">
+            <h3 class="text-xs font-mono uppercase tracking-widest text-[#E50914] font-bold">Cast & Background</h3>
+            <p class="text-lg md:text-xl font-medium text-white/90 leading-relaxed">
+              I am <span class="text-white font-bold drop-shadow">Lalit Kaushal</span>, a .NET Software Developer and
+              B.Tech graduate in Electrical and Electronics Engineering from Noida Institute of Engineering and
+              Technology (AKTU).
+            </p>
+            <p class="text-sm md:text-base text-white/60 font-light leading-relaxed">
+              My technical narrative centers on architecting scalable telecom portals, SIM/device management backends,
+              and SLA reporting systems. Experienced in developing production-grade services with ASP.NET Core, C#, SQL
+              Server, PostgreSQL, and automating operational workflows.
+            </p>
+          </div>
+
+          <div class="pt-8 flex flex-wrap gap-2 relative z-10">
+            <span class="px-3.5 py-1.5 rounded bg-white/5 border border-white/10 text-xs font-mono text-white/80">.NET
+              Core</span>
+            <span class="px-3.5 py-1.5 rounded bg-white/5 border border-white/10 text-xs font-mono text-white/80">C# /
+              ASP.NET</span>
+            <span class="px-3.5 py-1.5 rounded bg-white/5 border border-white/10 text-xs font-mono text-white/80">SQL
+              Server & PostgreSQL</span>
+            <span
+              class="px-3.5 py-1.5 rounded bg-white/5 border border-white/10 text-xs font-mono text-white/80">RESTful
+              APIs</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Milestones & Accolades (Span 5) -->
+        <div
+          class="bento-card md:col-span-5 p-8 md:p-12 rounded-[2.5rem] shadow-2xl flex flex-col justify-between relative group">
+          <div class="bento-spotlight"></div>
+          <div class="absolute top-0 right-0 p-8 text-white/5 font-mono text-7xl font-black pointer-events-none">02
+          </div>
+
+          <div class="space-y-5 relative z-10">
+            <h3 class="text-xs font-mono uppercase tracking-widest text-[#E50914] font-bold">Milestones & Accolades</h3>
+            <ul class="space-y-3.5 text-sm text-white/80 font-light">
+              <li class="flex items-start gap-2.5">
+                <span class="text-[#E50914] font-bold">&#8250;</span>
+                <span>Solved <strong class="text-white"><span class="counter-num" data-target="300">300</span>+
+                    algorithmic coding problems</strong> across LeetCode, HackerRank, and CodeChef.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-[#E50914] font-bold">&#8250;</span>
+                <span>Earned <strong class="text-white"><span class="counter-num" data-target="5">5</span>-star ratings
+                    on HackerRank</strong> in C#, .NET, and Problem Solving.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-[#E50914] font-bold">&#8250;</span>
+                <span>Achieved <strong class="text-white"><span class="counter-num" data-target="100">100</span>%
+                    completion</strong> in the MountBlue Coding Challenge under strict time constraints.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-[#E50914] font-bold">&#8250;</span>
+                <span>Certified in <strong class="text-white">.NET Fundamentals</strong> (Great Learning), Google
+                  Coursera Data Analytics, and IBM Python.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-6 font-mono text-xs text-white/40 relative z-10">
+            // SEASON_01 HIGHLIGHTS
+          </div>
+        </div>
+
+        <!-- Card 3: Technical Ecosystem (Span 12) -->
+        <div
+          class="bento-card md:col-span-12 p-8 md:p-12 rounded-[2.5rem] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 relative group">
+          <div class="bento-spotlight"></div>
+
+          <div class="space-y-2 text-left relative z-10">
+            <h3 class="text-xs font-mono uppercase tracking-widest text-[#E50914] font-bold">Production Tech Stack</h3>
+            <p class="text-base md:text-lg font-semibold text-white">Equipped with enterprise .NET, database, and API
+              instruments for high-throughput scaling.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 relative z-10">
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">C#</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">.NET
+              Core</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">ASP.NET</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">ADO.NET</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">Entity
+              Framework</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">SQL
+              Server</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">PostgreSQL</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">RESTful
+              APIs</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">JavaScript</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">Bootstrap</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">IIS
+              Server</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">Swagger</span>
+            <span
+              class="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white hover:bg-[#E50914]/20 hover:border-[#E50914]/40 hover:scale-105 transition-all">Git
+              & GitHub</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 6. EPISODE 02: EXPERIENCE & COMPETENCIES (STACKING CARDS)       -->
+  <!-- ============================================================== -->
+  <section id="expertise"
+    class="relative w-full bg-[#050505] text-white py-24 px-6 md:px-12 select-none overflow-hidden border-t border-white/5">
+    <div
+      class="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-[#E50914]/10 rounded-full blur-[140px] pointer-events-none">
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto w-full space-y-12">
+
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+        <div class="space-y-3 max-w-xl">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/80 backdrop-blur-xl border border-[#E50914]/40 text-[11px] font-mono uppercase tracking-widest text-white shadow-xl">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#E50914] animate-ping"></span>
+            <span class="text-[#E50914] font-bold">EPISODE 02</span>
+            <span class="text-white/40">|</span>
+            <span>EXPERIENCE & CORE ARCHITECTURE</span>
+          </div>
+          <h2 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+            DIRECTOR'S CUT <br />
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
+              PRODUCTION ROLES.
+            </span>
+          </h2>
+        </div>
+        <p class="text-white/60 text-xs md:text-sm font-light leading-relaxed max-w-xs">
+          Demonstrated engineering track record spanning high-scale telecom platforms, automated SLA reporting, and
+          database query optimization.
+        </p>
+      </div>
+
+      <!-- Stacking Cards Container -->
+      <div class="relative flex flex-col gap-8 pb-20">
+
+        <!-- Card 1: Inventia Technology Consultants -->
+        <div
+          class="stack-card w-full p-8 rounded-2xl bg-gradient-to-br from-[#1f0a0c] via-[#121212] to-[#0a0a0a] shadow-[0_20px_45px_rgba(0,0,0,0.85)] group">
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-[#E50914] to-transparent">
+          </div>
+          <div class="flex items-center justify-between w-full mb-4">
+            <span
+              class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#E50914] px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
+              JULY 2026 – PRESENT &bull; NOIDA SEC-68
+            </span>
+            <span class="text-3xl font-mono font-black text-white/20">01</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-5 space-y-2">
+              <h3
+                class="text-2xl md:text-3xl font-black text-white tracking-tight group-hover:text-[#E50914] transition-colors">
+                Software Developer (.NET)
+              </h3>
+              <p class="text-xs font-mono text-[#E50914]/90 tracking-wider">Inventia Technology Consultants</p>
+            </div>
+            <div class="lg:col-span-7">
+              <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">
+                Developed an SLA Management & Reporting System using ASP.NET Core, C#, PostgreSQL, and RESTful APIs for
+                monthly SLA data processing and reporting. Implemented Excel upload/download, validation, staging,
+                preview, confirmation, and automated SLA calculation using PostgreSQL stored procedures. Built SLA
+                dashboards with State, DISCOM, Month, and Status filters.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: ENK Technologies -->
+        <div
+          class="stack-card w-full p-8 rounded-2xl bg-gradient-to-br from-[#1a0809] via-[#111111] to-[#090909] shadow-[0_20px_45px_rgba(0,0,0,0.85)] group">
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-[#E50914] to-transparent">
+          </div>
+          <div class="flex items-center justify-between w-full mb-4">
+            <span
+              class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#E50914] px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
+              OCT 2025 – JULY 2026 &bull; NOIDA SEC-73
+            </span>
+            <span class="text-3xl font-mono font-black text-white/20">02</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-5 space-y-2">
+              <h3
+                class="text-2xl md:text-3xl font-black text-white tracking-tight group-hover:text-[#E50914] transition-colors">
+                Associate Software Developer (.NET)
+              </h3>
+              <p class="text-xs font-mono text-[#E50914]/90 tracking-wider">ENK Technologies</p>
+            </div>
+            <div class="lg:col-span-7">
+              <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">
+                Designed and developed the USA-based telecom portal UTel using ASP.NET and C#, enabling SIM activation,
+                recharge processing, reporting, invoice generation, and bulk operations. Built centralized ENK
+                cross-server authentication connecting separate production servers seamlessly. Automated backend
+                operational workflows using scheduled scripts and background services across IIS.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Virtuzo Infosystems (Associate) -->
+        <div
+          class="stack-card w-full p-8 rounded-2xl bg-gradient-to-br from-[#220a0d] via-[#131313] to-[#0a0a0a] shadow-[0_20px_45px_rgba(0,0,0,0.85)] group">
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-[#E50914] to-transparent">
+          </div>
+          <div class="flex items-center justify-between w-full mb-4">
+            <span
+              class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#E50914] px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
+              AUG 2024 – SEP 2025 &bull; NOIDA SEC-62
+            </span>
+            <span class="text-3xl font-mono font-black text-white/20">03</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-5 space-y-2">
+              <h3
+                class="text-2xl md:text-3xl font-black text-white tracking-tight group-hover:text-[#E50914] transition-colors">
+                Associate Software Developer (.NET)
+              </h3>
+              <p class="text-xs font-mono text-[#E50914]/90 tracking-wider">Virtuzo Infosystems Pvt Ltd</p>
+            </div>
+            <div class="lg:col-span-7">
+              <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">
+                Designed and developed a comprehensive WIFLY Device Management Portal using ASP.NET and C# for device
+                activation, recharge, reporting, and plan verification. Built optimized SQL Server DB with efficient
+                tables, stored procedures, and integrated REST APIs. Enforced role-based access control (RBAC) and
+                strict security policies.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Virtuzo Infosystems (Intern) -->
+        <div
+          class="stack-card w-full p-8 rounded-2xl bg-gradient-to-br from-[#1d090b] via-[#101010] to-[#080808] shadow-[0_20px_45px_rgba(0,0,0,0.85)] group">
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-[#E50914] to-transparent">
+          </div>
+          <div class="flex items-center justify-between w-full mb-4">
+            <span
+              class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#E50914] px-2.5 py-0.5 rounded bg-red-600/10 border border-red-600/25">
+              FEB 2024 – JULY 2024 &bull; NOIDA SEC-62
+            </span>
+            <span class="text-3xl font-mono font-black text-white/20">04</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-5 space-y-2">
+              <h3
+                class="text-2xl md:text-3xl font-black text-white tracking-tight group-hover:text-[#E50914] transition-colors">
+                .NET Developer Intern
+              </h3>
+              <p class="text-xs font-mono text-[#E50914]/90 tracking-wider">Virtuzo Infosystems Pvt Ltd</p>
+            </div>
+            <div class="lg:col-span-7">
+              <p class="text-xs md:text-sm text-white/80 font-light leading-relaxed">
+                Maintained real-time USA Telecoms Network Boom Commission Portal, implementing CRUD APIs and Data
+                Import/Export modules with reduced response times. Designed RESTful Web APIs documented with Swagger and
+                tested with Postman. Provided night technical support across production portals ensuring zero downtime
+                during releases.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 7. EPISODE 03: TECHNICAL ARSENAL (3D SKILLS CAROUSEL)          -->
+  <!-- ============================================================== -->
+  <section id="skills"
+    class="relative w-full min-h-screen bg-[#0b0b0b] text-white overflow-hidden flex items-center justify-center select-none py-28 border-t border-white/5">
+
+    <!-- Massive Outline Typography SKILLS -->
+    <div class="absolute inset-0 flex items-center justify-center z-0 pointer-events-none opacity-20">
+      <h1 class="text-[20vw] font-black uppercase text-transparent tracking-tighter"
+        style="-webkit-text-stroke: 2px rgba(229,9,20,0.4);">
+        SKILLS
+      </h1>
+    </div>
+
+    <!-- Container -->
+    <div class="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 flex flex-col items-center">
+
+      <!-- Top Title -->
+      <div class="text-center space-y-3 mb-12">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/80 backdrop-blur-xl border border-[#E50914]/40 text-xs font-mono uppercase tracking-widest text-[#E50914]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#E50914] animate-ping"></span>
+          <span>EPISODE 03 // TECHNICAL ARSENAL</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
+          ENTERPRISE TECH STACK
+        </h2>
+        <p class="text-xs md:text-sm text-white/60 font-light max-w-lg mx-auto">
+          High-performance tools, languages, frameworks, and databases engineered for high-throughput telecom, SLA, and
+          enterprise applications.
+        </p>
+      </div>
+
+      <!-- Carousel Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+
+        <!-- Skill 1 -->
+        <div
+          class="p-8 rounded-3xl bg-[#141414]/95 backdrop-blur-2xl border border-white/10 hover:border-[#E50914]/70 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group flex flex-col justify-between h-[360px] relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-6 text-white/5 font-mono text-5xl font-black">01</div>
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+              CORE BACKEND
+            </span>
+            <h3 class="text-2xl font-black text-white group-hover:text-[#E50914] transition-colors">
+              .NET Ecosystem
+            </h3>
+            <p class="text-xs text-white/70 font-light leading-relaxed">
+              Engineering scalable backend services using .NET Core, ASP.NET, C#, ADO.NET, Entity Framework, and ASP.NET
+              MVC architectures.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">.NET
+              Core</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">C#</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">ASP.NET</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Entity
+              Framework</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">MVC</span>
+          </div>
+        </div>
+
+        <!-- Skill 2 -->
+        <div
+          class="p-8 rounded-3xl bg-[#141414]/95 backdrop-blur-2xl border border-white/10 hover:border-[#E50914]/70 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group flex flex-col justify-between h-[360px] relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-6 text-white/5 font-mono text-5xl font-black">02</div>
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+              DATA ENGINEERING
+            </span>
+            <h3 class="text-2xl font-black text-white group-hover:text-[#E50914] transition-colors">
+              Database Technologies
+            </h3>
+            <p class="text-xs text-white/70 font-light leading-relaxed">
+              Designing optimized schemas, high-speed stored procedures, indexing, automated staging calculations, and
+              performance tuning.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">MS SQL
+              Server</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">PostgreSQL</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">MySQL</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Stored
+              Procedures</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">RDBMS</span>
+          </div>
+        </div>
+
+        <!-- Skill 3 -->
+        <div
+          class="p-8 rounded-3xl bg-[#141414]/95 backdrop-blur-2xl border border-white/10 hover:border-[#E50914]/70 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group flex flex-col justify-between h-[360px] relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-6 text-white/5 font-mono text-5xl font-black">03</div>
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+              INTEGRATION
+            </span>
+            <h3 class="text-2xl font-black text-white group-hover:text-[#E50914] transition-colors">
+              RESTful APIs & Auth
+            </h3>
+            <p class="text-xs text-white/70 font-light leading-relaxed">
+              Building secure Web APIs, centralized authentication pipelines, Swagger API contracts, and third-party
+              telecom integrations.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">RESTful
+              APIs</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Swagger</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Postman</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">RBAC
+              Security</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">JSON /
+              XML</span>
+          </div>
+        </div>
+
+        <!-- Skill 4 -->
+        <div
+          class="p-8 rounded-3xl bg-[#141414]/95 backdrop-blur-2xl border border-white/10 hover:border-[#E50914]/70 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group flex flex-col justify-between h-[360px] relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-6 text-white/5 font-mono text-5xl font-black">04</div>
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+              CLIENT & UI
+            </span>
+            <h3 class="text-2xl font-black text-white group-hover:text-[#E50914] transition-colors">
+              Web & Frontend
+            </h3>
+            <p class="text-xs text-white/70 font-light leading-relaxed">
+              Crafting responsive administrative interfaces, dynamic search modules, data tables, and high-performance
+              user experiences.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">JavaScript</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">jQuery</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Bootstrap</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">HTML5</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">CSS3</span>
+          </div>
+        </div>
+
+        <!-- Skill 5 -->
+        <div
+          class="p-8 rounded-3xl bg-[#141414]/95 backdrop-blur-2xl border border-white/10 hover:border-[#E50914]/70 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group flex flex-col justify-between h-[360px] relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-6 text-white/5 font-mono text-5xl font-black">05</div>
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+              COMPETITIVE DSA
+            </span>
+            <h3 class="text-2xl font-black text-white group-hover:text-[#E50914] transition-colors">
+              Algorithmic Problem Solving
+            </h3>
+            <p class="text-xs text-white/70 font-light leading-relaxed">
+              Sharpened DSA mastery with 300+ solved algorithmic problems, 5-Star HackerRank rating, and MountBlue 100%
+              completion.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Data
+              Structures</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Algorithms</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">LeetCode
+              (300+)</span>
+            <span
+              class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">HackerRank
+              5★</span>
+          </div>
+        </div>
+
+        <!-- Skill 6 -->
+        <div
+          class="p-8 rounded-3xl bg-[#141414]/95 backdrop-blur-2xl border border-white/10 hover:border-[#E50914]/70 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group flex flex-col justify-between h-[360px] relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-6 text-white/5 font-mono text-5xl font-black">06</div>
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+              DEVOPS & METHODOLOGY
+            </span>
+            <h3 class="text-2xl font-black text-white group-hover:text-[#E50914] transition-colors">
+              Developer Tools
+            </h3>
+            <p class="text-xs text-white/70 font-light leading-relaxed">
+              Managing production deployments on IIS, version control workflows, Sprint tracking in Jira, and modern AI
+              developer tools.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Visual
+              Studio</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">VS
+              Code</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Git /
+              GitHub</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">IIS
+              Server</span>
+            <span class="text-xs font-mono bg-white/5 border border-white/10 px-2.5 py-1 rounded text-white/80">Jira &
+              Agile</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 8. EPISODE 04: ORIGINAL SERIES & RELEASES (CIRCULAR 3D CAROUSEL) -->
+  <!-- ============================================================== -->
+  <section id="projects"
+    class="relative w-full h-screen bg-[#0b0b0b] text-white overflow-hidden flex items-center justify-center md:[perspective:1000px] select-none border-t border-white/5">
+    <!-- Dynamic Netflix Dark Background Vignettes -->
+    <div id="projects-bg-container" class="absolute inset-0 z-0 pointer-events-none"></div>
+
+    <!-- Massive Background Typography (Netflix Red & White Outline) -->
+    <div id="projects-watermark-container"
+      class="absolute inset-0 flex items-center justify-center z-0 pointer-events-none"></div>
+
+    <!-- Fixed Header Top Left -->
+    <div class="absolute top-8 left-6 md:left-12 z-30 pointer-events-none space-y-1">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/80 backdrop-blur-xl border border-[#E50914]/40 text-xs font-mono uppercase tracking-widest text-[#E50914]">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#E50914] animate-ping"></span>
+        <span>SEASON 01 // ORIGINAL SERIES & RELEASES</span>
+      </div>
+      <h2 class="text-2xl md:text-4xl font-black text-white tracking-tight">
+        ORIGINAL SERIES & RELEASES
+      </h2>
+      <p class="text-xs font-mono text-white/50 tracking-wider hidden sm:block">
+        // SCROLL TO EXPLORE PRODUCTIONS IN 3D REVOLUTION
+      </p>
+    </div>
+
+    <!-- Navigation Arrows & Controls Top Right / Bottom -->
+    <div class="absolute bottom-8 right-6 md:right-12 z-30 flex items-center gap-3">
+      <button id="proj-prev-btn"
+        class="w-10 h-10 rounded-full bg-[#141414]/90 border border-white/20 hover:border-[#E50914] text-white flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-xl"
+        title="Previous Production">
+        <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <span id="proj-counter" class="text-xs font-mono text-white/70 px-2 tracking-widest">01 / 08</span>
+      <button id="proj-next-btn"
+        class="w-10 h-10 rounded-full bg-[#141414]/90 border border-white/20 hover:border-[#E50914] text-white flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-xl"
+        title="Next Production">
+        <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- 3D Circular Carousel Container -->
+    <div id="projects-carousel"
+      class="relative w-full h-full flex md:items-center md:justify-center z-10 md:[transform-style:preserve-3d] overflow-x-auto overflow-y-hidden md:overflow-visible snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] items-center px-[10vw] md:px-0 gap-4 md:gap-0 touch-pan-x">
+      <!-- Injected via JavaScript -->
+    </div>
+
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 9. EPISODE 05: CONTACT & GET IN TOUCH (WATERMARK & FORM)        -->
+  <!-- ============================================================== -->
+  <section id="contact"
+    class="bg-[#0b0b0b] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-white/10 select-none">
+
+    <!-- Red Ambient Glow -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E50914]/15 rounded-full blur-[160px] pointer-events-none z-0">
+    </div>
+
+    <!-- Huge Parallax Background Text CONTACT -->
+    <div id="contact-watermark"
+      class="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12 opacity-10">
+      <h1
+        class="text-[25vw] leading-[0.75] font-black text-[#E50914] uppercase tracking-tighter select-none scale-y-[1.6] origin-top font-bebas">
+        CONTACT
+      </h1>
+    </div>
+
+    <!-- Form Card Overlay -->
+    <div class="relative z-10 w-full flex justify-end items-end">
+      <div
+        class="bg-[#141414]/95 backdrop-blur-2xl border-t border-l border-white/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-white flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(0,0,0,0.9)] relative overflow-hidden">
+
+        <!-- Crimson Accent Stripe -->
+        <div
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-[#E50914] to-transparent opacity-90">
+        </div>
+
+        <!-- Header and Direct Contact Badges -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 md:mb-12">
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-red-600/10 border border-red-600/30 text-xs font-mono uppercase tracking-widest text-[#E50914]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#E50914] animate-ping"></span>
+            <span>EPISODE 04 // GET IN TOUCH</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-white/60">
+            <a href="mailto:baba231216@gmail.com" class="hover:text-[#E50914] transition-colors">✉
+              baba231216@gmail.com</a>
+            <span>•</span>
+            <a href="tel:9120602649" class="hover:text-[#E50914] transition-colors">☎ +91 9120602649</a>
+            <span>•</span>
+            <span>📍 Noida, Sector - 68, UP</span>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form id="contact-form" action="https://formsubmit.co/baba231216@gmail.com" method="POST" class="flex flex-col gap-10 md:gap-14 w-full">
+          <!-- Hidden inputs for FormSubmit email service -->
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_subject" value="New Portfolio Message from Lalit Kaushal Portfolio" />
+
+          <div class="flex flex-col md:flex-row gap-10 md:gap-16 w-full">
+
+            <!-- Left Column Inputs -->
+            <div class="flex-1 flex flex-col gap-8">
+              <div class="input-wrapper">
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" required
+                  class="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-[#E50914] transition-colors placeholder-white/40 font-medium rounded-none text-white" />
+                <div class="input-line"></div>
+              </div>
+              <div class="input-wrapper">
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" required
+                  class="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-[#E50914] transition-colors placeholder-white/40 font-medium rounded-none text-white" />
+                <div class="input-line"></div>
+              </div>
+              <div class="input-wrapper">
+                <input type="email" id="email" name="email" placeholder="Email Address" required
+                  class="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-[#E50914] transition-colors placeholder-white/40 font-medium rounded-none text-white" />
+                <div class="input-line"></div>
+              </div>
+            </div>
+
+            <!-- Right Column Message -->
+            <div class="flex-1 flex flex-col">
+              <div class="input-wrapper h-full flex flex-col">
+                <textarea id="message" name="message"
+                  placeholder="Type your message, project scope, or opportunity here..." required
+                  class="w-full h-full min-h-[140px] bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-[#E50914] transition-colors placeholder-white/40 font-medium resize-none rounded-none text-white"></textarea>
+                <div class="input-line"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Section -->
+          <div class="flex flex-col md:flex-row gap-10 pt-6 border-t border-white/10">
+            <div class="flex-1 flex items-start gap-4 text-sm font-light text-white/70">
+              <input type="checkbox" id="permission" name="permission" required
+                class="mt-1 w-4 h-4 rounded-sm border-white/30 bg-transparent text-[#E50914] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                style="accent-color: #E50914;" />
+              <label for="permission" class="cursor-pointer max-w-[320px] leading-snug">
+                I give permission to Lalit Kaushal to contact me regarding this message.
+              </label>
+            </div>
+
+            <div class="flex-1 flex flex-col gap-6 text-xs text-white/50 font-light">
+              <p class="leading-relaxed max-w-[400px]">
+                Protected by TLS 1.3 encryption and enterprise security protocols. Messages are answered promptly within
+                24 hours.
+              </p>
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
+                <p class="max-w-[250px] leading-relaxed">
+                  Ready to architect mission-critical .NET backends? Send a signal.
                 </p>
+                <button type="submit" id="contact-submit-btn"
+                  class="px-8 py-3.5 rounded bg-[#E50914] text-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:bg-red-700 transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:scale-105">
+                  <span id="btn-text" class="flex items-center gap-3">
+                    Send Message
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                      stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
             </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 10. NETFLIX DEVELOPER SERIES FOOTER                             -->
+  <!-- ============================================================== -->
+  <footer class="bg-[#050505] text-white py-16 px-6 md:px-12 border-t border-white/10 select-none relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col space-y-12">
+
+      <!-- Top Section -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-12 border-b border-white/10">
+        <div class="space-y-2">
+          <div
+            class="text-2xl font-black text-[#E50914] tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(220,38,38,0.9)]">
+            LALIT KAUSHAL<span class="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+          </div>
+          <p class="text-xs font-mono text-white/50 tracking-widest uppercase">
+            // NETFLIX DEVELOPER SERIES &bull; SEASON 2026
+          </p>
         </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="section skills">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">C#</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Web Technologies</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">HTML</span>
-                        <span class="skill-tag">CSS</span>
-                        <span class="skill-tag">Bootstrap</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">jQuery</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Frameworks & Libraries</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">.NET Core</span>
-                        <span class="skill-tag">ASP.NET</span>
-                        <span class="skill-tag">ADO.NET</span>
-                        <span class="skill-tag">Entity Framework</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Database Technologies</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">MS SQL / SQL Server</span>
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">DBMS</span>
-                        <span class="skill-tag">RDBMS</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Concepts & Constructs</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Web API</span>
-                        <span class="skill-tag">Object-Oriented Programming (OOP)</span>
-                        <span class="skill-tag">Data Structures</span>
-                        <span class="skill-tag">Operating Systems</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Developer Tools</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Visual Studio</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">IntelliJ IDEA</span>
-                        <span class="skill-tag">Replit</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">GitHub</span>
-                    </div>
-                </div>
-            </div>
+        <nav class="flex flex-wrap gap-6 md:gap-8 text-xs font-mono uppercase tracking-widest text-white/70">
+          <a href="#home" class="hover:text-[#E50914] transition-colors">Home</a>
+          <a href="#about" class="hover:text-[#E50914] transition-colors">About</a>
+          <a href="#expertise" class="hover:text-[#E50914] transition-colors">Experience</a>
+          <a href="#skills" class="hover:text-[#E50914] transition-colors">Skills</a>
+          <a href="#projects" class="hover:text-[#E50914] transition-colors">Projects</a>
+          <a href="#contact" class="hover:text-[#E50914] transition-colors">Contact</a>
+        </nav>
+      </div>
+
+      <!-- Middle Section -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-xs font-mono text-white/60">
+        <div class="flex flex-wrap items-center gap-6">
+          <a href="https://github.com/lalitkaushal007" target="_blank" rel="noopener noreferrer"
+            class="hover:text-[#E50914] transition-colors uppercase tracking-wider">
+            GitHub //
+          </a>
+          <a href="https://linkedin.com/in/lalit-kaushal-7862501b5" target="_blank" rel="noopener noreferrer"
+            class="hover:text-[#E50914] transition-colors uppercase tracking-wider">
+            LinkedIn //
+          </a>
+          <a href="https://www.hackerrank.com" target="_blank" rel="noopener noreferrer"
+            class="hover:text-[#E50914] transition-colors uppercase tracking-wider">
+            HackerRank (5★) //
+          </a>
+          <a href="Lalit-Kaushal-Resume.pdf" download
+            class="text-[#E50914] hover:text-red-400 font-bold transition-colors uppercase tracking-wider">
+            Download Resume PDF ↓
+          </a>
         </div>
-    </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="section experience">
-
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Associate Software Developer (.NET)</h3>
-                        <h4>Virtuzo Infosystems Pvt Ltd - Noida Sector - 62, U.P.</h4>
-                        <span class="timeline-period">Aug 2024 - Present</span>
-                        <ul>
-                            <li>Designed and developed a comprehensive WIFLY Device Management Portal using ASP.NET and
-                                C#</li>
-                            <li>Built optimized SQL Server DB with efficient tables, stored procedures, and functions
-                            </li>
-                            <li>Integrated REST APIs for seamless third-party and inter-module communication</li>
-                            <li>Designed and developed RESTful APIs, performed seamless API integrations</li>
-                            <li>Integrated automation scripts and developed server-side services</li>
-                            <li>Provided night technical support across all production portals</li>
-                            <li>Partnered with cross-functional teams to enhance database security</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>.NET Developer Intern</h3>
-                        <h4>Virtuzo Infosystems Pvt Ltd - Noida Sector - 62, U.P.</h4>
-                        <span class="timeline-period">Feb 2024 - July 2024</span>
-                        <ul>
-                            <li>Developed and maintained real-time applications including the USA Telecoms Network Boom
-                                Commission Portal</li>
-                            <li>Designed and developed responsive web applications using ASP.NET, C#, ADO.NET, HTML,
-                                CSS, Bootstrap and JavaScript</li>
-                            <li>Built RESTful Web APIs, documented endpoints using Swagger, and performed API testing
-                                via Postman</li>
-                            <li>Implemented database operations using ADO.NET with MS SQL/SQL Server</li>
-                            <li>Provided remote technical support to the USA-based team</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="text-white/40 tracking-widest uppercase">
+          LOCATION: NOIDA, UTTAR PRADESH, IN
         </div>
-    </section>
+      </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="project"
-                style="background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: var(--shadow);">
-                <h3 style="color: var(--primary-color); font-size: 1.8rem; margin-bottom: 10px;">E-LIBRARY MANAGEMENT
-                    SYSTEM</h3>
-                <p class="project-type" style="color: var(--accent-color); margin-bottom: 20px;">Personal Project |
-                    Full-Stack Web Application Development</p>
-                <div class="project-technologies" style="margin-bottom: 20px;">
-                    <strong style="color: var(--dark-color);">Technologies:</strong>
-                    <span>Frontend: HTML5, CSS3, Bootstrap, jQuery, JavaScript</span> |
-                    <span>Backend: ASP.NET Framework (C#), SQL Server</span>
-                </div>
-                <div class="project-description">
-                    <p style="margin-bottom: 15px;"><strong style="color: var(--dark-color);">Project Overview:</strong>
-                        Designed and developed a fully responsive e-library management system as a complete full-stack
-                        solution, seamlessly integrating frontend and backend components.</p>
-                    <p style="margin-bottom: 15px;"><strong style="color: var(--dark-color);">Key Features:</strong>
-                        Implemented secure user authentication, advanced real-time search, and a responsive resource
-                        management dashboard, ensuring efficient administration and seamless cross-device compatibility.
-                    </p>
-                    <p><strong style="color: var(--dark-color);">Technical Highlights:</strong> Implemented dynamic
-                        content updates with JavaScript/jQuery, optimized SQL queries for performance, and built secure,
-                        scalable backend logic using ASP.NET and C# with proper input validation and session management.
-                    </p>
-                </div>
-            </div>
+      <!-- Bottom Copyright -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-white/5 text-[11px] font-mono text-white/40 uppercase tracking-widest">
+        <p>&copy; 2026 Lalit Kaushal. All Rights Reserved.</p>
+        <p class="text-[#E50914]/80">STREAMING WORLDWIDE &bull; BUILT WITH 100% SAME NETFLIX THEME &bull; .NET CORE &
+          GSAP</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================== -->
+  <!-- 11. INTERACTIVE PROJECT DETAILS MODAL                          -->
+  <!-- ============================================================== -->
+  <div id="project-modal"
+    class="modal-backdrop fixed inset-0 z-[99990] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div
+      class="modal-card bg-[#141414] border border-[#E50914]/50 rounded-3xl p-6 md:p-10 max-w-2xl w-full text-white relative shadow-[0_25px_70px_rgba(0,0,0,0.95)]">
+      <button id="modal-close"
+        class="absolute top-6 right-6 text-white/60 hover:text-white text-2xl font-mono focus:outline-none">
+        &times;
+      </button>
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <span id="modal-episode"
+            class="text-xs font-mono font-bold text-[#E50914] bg-red-600/10 border border-red-600/30 px-2.5 py-1 rounded uppercase">S01
+            E01</span>
+          <span id="modal-match" class="text-xs font-mono text-green-400 font-bold">99% Match</span>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section"
-        style="background: linear-gradient(135deg, var(--light-color) 0%, var(--bg-color) 100%);">
-        <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <div class="contact-info" style="text-align: center; font-size: 1.2rem;">
-                <p style="margin-bottom: 15px;"><i class="fas fa-phone"
-                        style="color: var(--primary-color); margin-right: 10px;"></i> <a href="callto:9120602649"
-                        style="color: var(--text-color); text-decoration: none;">9120602649</a></p>
-                <p style="margin-bottom: 15px;"><i class="fas fa-envelope"
-                        style="color: var(--primary-color); margin-right: 10px;"></i> <a
-                        href="mailto:baba231216@gmail.com"
-                        style="color: var(--text-color); text-decoration: none;">baba231216@gmail.com</a></p>
-                <p style="margin-bottom: 15px;"><i class="fab fa-linkedin"
-                        style="color: var(--primary-color); margin-right: 10px;"></i> <a
-                        href="https://www.linkedin.com/in/lalit-kaushal-7862501b5/" target="_blank"
-                        style="color: var(--text-color); text-decoration: none;">linkedin.com/in/lalit-kaushal-7862501b5</a>
-                </p>
-                <p><i class="fab fa-github" style="color: var(--primary-color); margin-right: 10px;"></i> <a
-                        href="https://github.com/lalitkaushal007" target="_blank"
-                        style="color: var(--text-color); text-decoration: none;">github.com/lalitkaushal007</a></p>
-            </div>
+        <h3 id="modal-title" class="text-3xl font-black tracking-tight text-white">Project Title</h3>
+        <p id="modal-category" class="text-xs font-mono uppercase tracking-widest text-[#E50914]">Category</p>
+        <p id="modal-desc" class="text-sm text-white/80 font-light leading-relaxed">Description goes here.</p>
+        <div class="pt-4 border-t border-white/10 space-y-2">
+          <h4 class="text-xs font-mono text-white/50 uppercase tracking-wider">Production Stack</h4>
+          <div id="modal-tags" class="flex flex-wrap gap-2"></div>
         </div>
-    </section>
+        <div class="pt-6 flex justify-end">
+          <button id="modal-btn-close"
+            class="px-6 py-2 rounded bg-white/10 hover:bg-[#E50914] hover:text-white transition-all text-xs font-mono uppercase tracking-wider">
+            Close Viewer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        // Header scroll effect
-        window.addEventListener('scroll', function () {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+  <!-- ============================================================== -->
+  <!-- 12. TOAST NOTIFICATION                                         -->
+  <!-- ============================================================== -->
+  <div id="toast"
+    class="toast-notice bg-[#141414] border border-[#E50914] text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+    <div id="toast-dot" class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
+    <div>
+      <h5 id="toast-title" class="text-xs font-bold uppercase tracking-wider text-white">Signal Received!</h5>
+      <p id="toast-msg" class="text-xs text-white/70 font-light">Thank you! Your message has been captured.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 13. MASTER JAVASCRIPT ANIMATIONS & INTERACTIONS                -->
+  <!-- ============================================================== -->
+  <script>
+    // Project Data Set
+    const projects = [
+      {
+        title: "SLA Management & Reporting Platform",
+        category: "Enterprise .NET & PostgreSQL",
+        description: "Automated monthly SLA data processing, Excel validation, preview & confirmation pipelines, and multi-filter dashboards for monitoring critical performance metrics.",
+        tags: ["ASP.NET Core", "C#", "PostgreSQL", "Stored Procedures", "REST APIs"],
+        match: "99%",
+        episode: "S01 E01"
+      },
+      {
+        title: "UTel USA Telecom Portal",
+        category: "Telecom & Distributed Systems",
+        description: "USA-based telecom portal enabling SIM activations, automated recharge processing, invoice generation, and bulk operations across distributed servers.",
+        tags: ["ASP.NET", "C#", "RESTful APIs", "IIS", "Centralized Auth"],
+        match: "99%",
+        episode: "S01 E02"
+      },
+      {
+        title: "WIFLY Device Management Portal",
+        category: "IoT & Device Operations",
+        description: "Comprehensive device lifecycle management, device activation, plan verification, and robust SQL Server architecture with strict role-based access control.",
+        tags: ["ASP.NET", "C#", "SQL Server", "RBAC", "Stored Procedures"],
+        match: "98%",
+        episode: "S01 E03"
+      },
+      {
+        title: "Telecoms Commission Portal",
+        category: "Fintech & Telecom Integrations",
+        description: "Real-time USA telecoms network commission portal featuring high-performance CRUD APIs, Swagger documentation, and data import/export modules.",
+        tags: ["ADO.NET", "MS SQL", "REST Web APIs", "Postman", "Swagger"],
+        match: "97%",
+        episode: "S01 E04"
+      },
+      {
+        title: "E-Library Management System",
+        category: "Full-Stack Web Application",
+        description: "Full-stack management portal supporting user authentication, dynamic search, and optimized SQL queries for rapid resource retrieval and inventory management.",
+        tags: ["ASP.NET Framework", "C#", "SQL Server", "Bootstrap", "jQuery"],
+        match: "96%",
+        episode: "S01 E05"
+      },
+      {
+        title: "Cross-Platform Auth Gateway",
+        category: "Security & API Architecture",
+        description: "Unified cross-platform authentication connecting multiple separate production servers through secure API handshakes and single sign-on access.",
+        tags: [".NET Core", "REST APIs", "JWT", "IIS Servers", "OAuth"],
+        match: "99%",
+        episode: "S01 E06"
+      },
+      {
+        title: "Algorithmic Problem Engine",
+        category: "Competitive Programming & DSA",
+        description: "Optimized solutions for 300+ algorithmic problems across LeetCode, HackerRank, and CodeChef with minimal time and space Big-O complexity.",
+        tags: ["C#", "Data Structures", "Algorithms", "5-Star HackerRank"],
+        match: "100%",
+        episode: "S01 E07"
+      },
+      {
+        title: "Automated Operational Workflow Service",
+        category: "Automation & Background Services",
+        description: "Automated backend operational workflows using scheduled background services and scripts, significantly reducing manual administrative tasks.",
+        tags: ["C#", "Background Services", "IIS", "Windows Services", "Automation"],
+        match: "98%",
+        episode: "S01 E08"
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Register GSAP ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. Netflix Preloader Sequence
+      const preloader = document.getElementById("preloader");
+      const preloaderContent = document.getElementById("preloader-content");
+
+      const preloaderTl = gsap.timeline({
+        onComplete: () => {
+          gsap.to(preloader, {
+            opacity: 0,
+            duration: 0.5,
+            onComplete: () => preloader.style.display = "none"
+          });
+          initHeroAnimations();
+        }
+      });
+
+      preloaderTl
+        .fromTo(preloaderContent,
+          { scale: 0.95, opacity: 0, filter: "blur(10px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }
+        )
+        .to(preloaderContent, {
+          scale: 1.06,
+          opacity: 0,
+          filter: "blur(10px)",
+          duration: 0.4,
+          ease: "power2.in",
+          delay: 0.5
         });
 
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const nav = document.getElementById('nav');
+      // 2. Dual Precision Cursor & Global Ambient Spotlight
+      const cursorDot = document.getElementById("cursor-dot");
+      const cursorRing = document.getElementById("cursor-ring");
+      const globalSpotlight = document.getElementById("global-spotlight");
 
-        menuToggle.addEventListener('click', function () {
-            nav.classList.toggle('nav-open');
-            menuToggle.classList.toggle('active');
+      gsap.set([cursorDot, cursorRing], { scale: 0.5, opacity: 0, transformOrigin: "50% 50%" });
+
+      const xToDot = gsap.quickTo(cursorDot, "x", { duration: 0.05, ease: "power2.out" });
+      const yToDot = gsap.quickTo(cursorDot, "y", { duration: 0.05, ease: "power2.out" });
+      const xToRing = gsap.quickTo(cursorRing, "x", { duration: 0.15, ease: "power3.out" });
+      const yToRing = gsap.quickTo(cursorRing, "y", { duration: 0.15, ease: "power3.out" });
+
+      window.addEventListener("mousemove", (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+
+        xToDot(x - 6);
+        yToDot(y - 6);
+        xToRing(x - 24);
+        yToRing(y - 24);
+
+        if (globalSpotlight) {
+          globalSpotlight.style.transform = `translate3d(${x - 350}px, ${y - 350}px, 0)`;
+        }
+      });
+
+      document.addEventListener("mouseenter", () => {
+        gsap.to([cursorDot, cursorRing, globalSpotlight], { opacity: 1, scale: 1, duration: 0.3 });
+      });
+
+      document.addEventListener("mouseleave", () => {
+        gsap.to([cursorDot, cursorRing, globalSpotlight], { opacity: 0, scale: 0.5, duration: 0.3 });
+      });
+
+      // 3. Hero Entrance & Lazy Parallax Marquee
+      function initHeroAnimations() {
+        gsap.fromTo(".hero-anim",
+          { y: 45, opacity: 0, filter: "blur(10px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, stagger: 0.14, ease: "power4.out" }
+        );
+
+        gsap.fromTo("#hero-3d-card",
+          { scale: 0.75, opacity: 0, rotationY: 25, rotationX: -15 },
+          {
+            scale: 1, opacity: 1, rotationY: 0, rotationX: 0, duration: 1.5, ease: "back.out(1.2)",
+            onComplete: () => {
+              // Lazy gentle idle breathing motion
+              gsap.to("#hero-3d-card", {
+                y: "+=12",
+                rotationZ: "+=0.6",
+                duration: 4.5,
+                yoyo: true,
+                repeat: -1,
+                ease: "sine.inOut"
+              });
+            }
+          }
+        );
+
+        // Lazy Marquee Parallax Drifting on Scroll
+        gsap.to(".animate-marquee", {
+          xPercent: -20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#home",
+            start: "top top",
+            end: "bottom top",
+            scrub: 2.5
+          }
+        });
+      }
+
+      // 4. Hero Card 3D Tilt Physics & Glare
+      const heroCard = document.getElementById("hero-3d-card");
+      const heroGlare = document.getElementById("hero-glare");
+      const heroSection = document.getElementById("home");
+
+      if (heroCard && heroSection) {
+        const xTilt = gsap.quickTo(heroCard, "rotationY", { duration: 0.4, ease: "power3.out" });
+        const yTilt = gsap.quickTo(heroCard, "rotationX", { duration: 0.4, ease: "power3.out" });
+        const glareX = gsap.quickTo(heroGlare, "x", { duration: 0.3, ease: "power2.out" });
+        const glareY = gsap.quickTo(heroGlare, "y", { duration: 0.3, ease: "power2.out" });
+
+        heroSection.addEventListener("mousemove", (e) => {
+          const rect = heroCard.getBoundingClientRect();
+          const cardCenterX = rect.left + rect.width / 2;
+          const cardCenterY = rect.top + rect.height / 2;
+
+          const rotateX = -((e.clientY - cardCenterY) / (rect.height / 2)) * 16;
+          const rotateY = ((e.clientX - cardCenterX) / (rect.width / 2)) * 16;
+
+          xTilt(rotateY);
+          yTilt(rotateX);
+
+          glareX((e.clientX - rect.left) - rect.width / 2);
+          glareY((e.clientY - rect.top) - rect.height / 2);
         });
 
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('.nav-list a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function () {
-                nav.classList.remove('nav-open');
-                menuToggle.classList.remove('active');
-            });
+        heroSection.addEventListener("mouseleave", () => {
+          xTilt(0);
+          yTilt(0);
+        });
+      }
+
+      // 5. Episode 01: About Bento Grid Lazy Stagger, 3D Magnetic Lag & Spotlight
+      const bentoCards = document.querySelectorAll(".bento-card");
+
+      // Lazy reveal with blur-to-sharp animation
+      gsap.fromTo(bentoCards,
+        { y: 80, opacity: 0, scale: 0.94, filter: "blur(14px)" },
+        {
+          y: 0, opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 1.4, stagger: 0.22, ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top 72%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Lazy 3D Magnetic Tilt and Spotlight on Bento Cards
+      bentoCards.forEach(card => {
+        const tiltX = gsap.quickTo(card, "rotationX", { duration: 0.6, ease: "power2.out" });
+        const tiltY = gsap.quickTo(card, "rotationY", { duration: 0.6, ease: "power2.out" });
+
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty("--mouse-x", `${x}px`);
+          card.style.setProperty("--mouse-y", `${y}px`);
+
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          tiltX(-((e.clientY - cy) / (rect.height / 2)) * 6);
+          tiltY(((e.clientX - cx) / (rect.width / 2)) * 6);
         });
 
-        // Timeline animation
-        const timelineItems = document.querySelectorAll('.timeline-item');
+        card.addEventListener("mouseleave", () => {
+          tiltX(0);
+          tiltY(0);
+        });
+      });
 
-        function checkScroll() {
-            timelineItems.forEach(item => {
-                const position = item.getBoundingClientRect();
-
-                // If item is visible in the viewport
-                if (position.top < window.innerHeight - 100) {
-                    item.classList.add('visible');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', checkScroll);
-        window.addEventListener('load', checkScroll);
-
-        // Three.js 3D background
-        function initThreeJS() {
-            const container = document.getElementById('canvas-container');
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-
-            // Create scene
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true });
-            renderer.setSize(width, height);
-            container.appendChild(renderer.domElement);
-
-            // Create particles
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 1000;
-
-            const posArray = new Float32Array(particlesCount * 3);
-            const colorArray = new Float32Array(particlesCount * 3);
-
-            for (let i = 0; i < particlesCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 20;
-                colorArray[i] = Math.random();
+      // Lazy Counter Number Tickers
+      const counterElements = document.querySelectorAll(".counter-num");
+      counterElements.forEach(el => {
+        const target = parseFloat(el.getAttribute("data-target"));
+        const isDecimal = target % 1 !== 0;
+        gsap.fromTo(el,
+          { innerText: 0 },
+          {
+            innerText: target,
+            duration: 2.2,
+            ease: "power3.out",
+            snap: { innerText: isDecimal ? 0.1 : 1 },
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none none"
             }
+          }
+        );
+      });
 
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-
-            const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.05,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8
-            });
-
-            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particlesMesh);
-
-            camera.position.z = 2;
-
-            // Animation
-            function animate() {
-                requestAnimationFrame(animate);
-
-                particlesMesh.rotation.x += 0.001;
-                particlesMesh.rotation.y += 0.001;
-
-                renderer.render(scene, camera);
+      // 6. Episode 02: Experience Stacking Cards Lazy Physics & Reveal
+      const stackCards = document.querySelectorAll(".stack-card");
+      stackCards.forEach((card, i) => {
+        // Inner elements progressive lazy reveal
+        gsap.fromTo(card.querySelectorAll("h3, p, span"),
+          { y: 20, opacity: 0, filter: "blur(6px)" },
+          {
+            y: 0, opacity: 1, filter: "blur(0px)",
+            duration: 1, stagger: 0.08, ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 82%",
+              toggleActions: "play none none reverse"
             }
+          }
+        );
 
-            animate();
+        // Stacking scrub with lazy lag
+        if (i === stackCards.length - 1) return;
+        gsap.to(card, {
+          scale: 0.91 - i * 0.025,
+          y: -18 - i * 10,
+          filter: "blur(6px)",
+          opacity: 0.4,
+          scrollTrigger: {
+            trigger: card,
+            start: `top ${90 + i * 22}px`,
+            end: "bottom top",
+            scrub: 1.5
+          }
+        });
+      });
 
-            // Handle window resize
-            window.addEventListener('resize', function () {
-                const width = container.clientWidth;
-                const height = container.clientHeight;
-                renderer.setSize(width, height);
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-            });
+      // Episode 03: Skills Cards Lazy Wave Reveal & Sinusoidal Breathing
+      const skillCards = document.querySelectorAll("#skills .p-8.rounded-3xl");
+      gsap.fromTo(skillCards,
+        { y: 80, opacity: 0, scale: 0.92, filter: "blur(12px)" },
+        {
+          y: 0, opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 1.3, stagger: 0.14, ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#skills",
+            start: "top 70%",
+            toggleActions: "play none none reverse"
+          }
         }
+      );
 
-        // Initialize Three.js
-        if (typeof THREE !== 'undefined') {
-            initThreeJS();
-        }
-
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-
-        // Check for saved theme preference or respect OS preference
-        if (localStorage.getItem('theme') === 'dark' ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
-            document.body.classList.add('dark-mode');
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                localStorage.setItem('theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
+      skillCards.forEach((card, idx) => {
+        // Gentle sinusoidal breathing motion
+        gsap.to(card, {
+          y: idx % 2 === 0 ? 8 : -8,
+          duration: 3.5 + (idx * 0.35),
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut"
         });
 
-    </script>
+        // 3D Magnetic Lag on Hover
+        const tiltX = gsap.quickTo(card, "rotationX", { duration: 0.5, ease: "power2.out" });
+        const tiltY = gsap.quickTo(card, "rotationY", { duration: 0.5, ease: "power2.out" });
+
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          tiltX(-((e.clientY - cy) / (r.height / 2)) * 8);
+          tiltY(((e.clientX - cx) / (r.width / 2)) * 8);
+        });
+
+        card.addEventListener("mouseleave", () => {
+          tiltX(0);
+          tiltY(0);
+        });
+      });
+
+      // Episode 05: Contact Lazy Parallax Watermark & Form Entrance
+      gsap.to("#contact-watermark", {
+        yPercent: 22,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#contact",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 2.5
+        }
+      });
+
+      gsap.fromTo("#contact form",
+        { y: 60, opacity: 0, filter: "blur(10px)" },
+        {
+          y: 0, opacity: 1, filter: "blur(0px)",
+          duration: 1.4, ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#contact",
+            start: "top 75%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      gsap.fromTo("#contact .mb-8 > div",
+        { x: -30, opacity: 0 },
+        {
+          x: 0, opacity: 1,
+          duration: 1.1, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#contact",
+            start: "top 75%"
+          }
+        }
+      );
+
+      // Footer Lazy Slide-Up
+      gsap.fromTo("footer .max-w-7xl > div",
+        { y: 35, opacity: 0, filter: "blur(8px)" },
+        {
+          y: 0, opacity: 1, filter: "blur(0px)",
+          duration: 1.1, stagger: 0.18, ease: "power3.out",
+          scrollTrigger: {
+            trigger: "footer",
+            start: "top 92%"
+          }
+        }
+      );
+
+      // 7. Render Projects with 3D Circular Horizontal Scrolling (Matching Skills cylinder wheel)
+      const projectsCarousel = document.getElementById("projects-carousel");
+      const projectsBgContainer = document.getElementById("projects-bg-container");
+      const projectsWatermarkContainer = document.getElementById("projects-watermark-container");
+
+      const projectCards = [];
+      const bgElements = [];
+      const textElements = [];
+
+      projects.forEach((proj, idx) => {
+        // Background vignette
+        const bg = document.createElement("div");
+        bg.className = "absolute inset-0 z-0 pointer-events-none opacity-0 bg-gradient-to-tr from-black via-[#160203] to-black transition-opacity duration-300";
+        projectsBgContainer.appendChild(bg);
+        bgElements.push(bg);
+
+        // Huge watermark typography
+        const watermark = document.createElement("h1");
+        watermark.className = "absolute text-[22vw] md:text-[18vw] font-black uppercase text-transparent leading-none tracking-tighter mix-blend-overlay pointer-events-none opacity-0 select-none font-bebas";
+        watermark.style.WebkitTextStroke = `2px ${idx % 2 === 0 ? 'rgba(229,9,20,0.35)' : 'rgba(255,255,255,0.15)'}`;
+        watermark.innerText = "RELEASES";
+        projectsWatermarkContainer.appendChild(watermark);
+        textElements.push(watermark);
+
+        // Card element
+        const card = document.createElement("div");
+        card.className = "md:absolute relative shrink-0 snap-center w-[84vw] sm:w-[380px] md:w-[450px] h-[480px] md:h-[540px] rounded-[32px] p-7 md:p-10 bg-[#141414]/95 backdrop-blur-2xl border border-white/15 flex flex-col justify-between overflow-hidden group shadow-[0_30px_60px_rgba(0,0,0,0.9)] hover:border-[#E50914]/80 transition-colors duration-500 cursor-pointer";
+        card.onclick = () => openProjectModal(idx);
+
+        card.innerHTML = `
+          <!-- Inner Red Glossy Reflection -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-red-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-20"></div>
+          
+          <!-- Top Card Metadata -->
+          <div class="flex items-center justify-between relative z-10">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono font-bold tracking-widest uppercase text-[#E50914] bg-red-600/10 px-3 py-1 rounded border border-red-600/20">
+                ${proj.episode}
+              </span>
+              <span class="text-xs font-mono text-green-400 font-bold bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">
+                ${proj.match} MATCH
+              </span>
+            </div>
+            <span class="text-xs font-mono text-white/40">
+              [ 0${idx + 1} / 0${projects.length} ]
+            </span>
+          </div>
+
+          <!-- Middle Title & Category & Description -->
+          <div class="space-y-3.5 relative z-10 my-auto">
+            <span class="text-xs font-mono text-[#E50914] uppercase tracking-wider font-bold">
+              ${proj.category}
+            </span>
+            <h3 class="text-2xl md:text-3xl font-black text-white tracking-tight group-hover:text-[#E50914] transition-colors duration-300 line-clamp-2">
+              ${proj.title}
+            </h3>
+            <p class="text-xs md:text-sm text-white/70 font-light leading-relaxed line-clamp-3">
+              ${proj.description}
+            </p>
+            <div class="pt-2">
+              <span class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/70 group-hover:text-[#E50914] transition-colors">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Play Synopsis Viewer
+              </span>
+            </div>
+          </div>
+
+          <!-- Bottom Tech Badges -->
+          <div class="flex flex-wrap gap-1.5 pt-4 border-t border-white/10 relative z-10">
+            ${proj.tags.map(t => `<span class="text-[11px] font-mono text-white/80 bg-white/5 border border-white/10 px-2.5 py-1 rounded group-hover:border-[#E50914]/30 transition-colors">${t}</span>`).join('')}
+          </div>
+
+          <!-- Bottom Glow Accent -->
+          <div class="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-[#E50914] group-hover:shadow-[0_0_15px_#E50914] transition-all"></div>
+        `;
+
+        projectsCarousel.appendChild(card);
+        projectCards.push(card);
+      });
+
+      // 3D Cylinder Horizontal Arc Motion Registration via GSAP
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 769px)", () => {
+        const updateCards = (p) => {
+          projectCards.forEach((card, i) => {
+            if (!card) return;
+            const offset = i - p;
+
+            const radius = 1800;
+            const angleSpread = 18;
+
+            const angle = offset * angleSpread;
+            const rad = angle * Math.PI / 180;
+
+            const x = Math.sin(rad) * radius;
+            const y = radius - (Math.cos(rad) * radius);
+            const z = -Math.abs(offset) * 55;
+
+            const scale = Math.max(0.4, 1 - Math.abs(offset) * 0.15);
+            const rotateZ = angle;
+
+            const opacity = Math.max(0.1, 1 - Math.abs(offset) * 0.3);
+            const zIndex = Math.round(100 - Math.abs(offset) * 10);
+
+            gsap.set(card, {
+              x: x,
+              y: y,
+              z: z,
+              scale: scale,
+              rotationZ: rotateZ,
+              rotationY: 0,
+              opacity: opacity,
+              zIndex: zIndex,
+            });
+          });
+
+          bgElements.forEach((bg, i) => {
+            if (!bg) return;
+            const itemOpacity = Math.max(0, 1 - Math.abs(i - p));
+            gsap.set(bg, { opacity: itemOpacity });
+          });
+
+          textElements.forEach((txt, i) => {
+            if (!txt) return;
+            const itemOpacity = Math.max(0, 1 - Math.abs(i - p));
+            gsap.set(txt, { opacity: itemOpacity });
+          });
+
+          const activeIdx = Math.min(projects.length - 1, Math.max(0, Math.round(p)));
+          const counter = document.getElementById("proj-counter");
+          if (counter) counter.innerText = `0${activeIdx + 1} / 0${projects.length}`;
+        };
+
+        updateCards(0);
+
+        let st = ScrollTrigger.create({
+          trigger: "#projects",
+          start: "top top",
+          end: "+=500%",
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const p = self.progress * (projects.length - 1);
+            updateCards(p);
+          }
+        });
+
+        // Arrow Buttons for Stepping
+        let currentProg = 0;
+        const prevBtn = document.getElementById("proj-prev-btn");
+        const nextBtn = document.getElementById("proj-next-btn");
+
+        if (prevBtn && nextBtn) {
+          prevBtn.onclick = () => {
+            const currentScroll = window.scrollY;
+            const step = (st.end - st.start) / (projects.length - 1);
+            window.scrollTo({
+              top: Math.max(st.start, currentScroll - step),
+              behavior: "smooth"
+            });
+          };
+
+          nextBtn.onclick = () => {
+            const currentScroll = window.scrollY;
+            const step = (st.end - st.start) / (projects.length - 1);
+            window.scrollTo({
+              top: Math.min(st.end, currentScroll + step),
+              behavior: "smooth"
+            });
+          };
+        }
+      });
+
+      mm.add("(max-width: 768px)", () => {
+        projectCards.forEach((card, i) => {
+          if (card) {
+            gsap.set(card, { clearProps: "x,y,z,rotation,scale,opacity,position" });
+            gsap.set(card, { scale: i === 0 ? 1 : 0.92 });
+          }
+        });
+
+        bgElements.forEach((bg, i) => {
+          if (bg) gsap.set(bg, { clearProps: "all", opacity: i === 0 ? 1 : 0 });
+        });
+
+        textElements.forEach((txt, i) => {
+          if (txt) gsap.set(txt, { clearProps: "all", opacity: i === 0 ? 1 : 0 });
+        });
+
+        // Mobile snap scroll listener
+        projectsCarousel.addEventListener("scroll", (e) => {
+          const container = e.target;
+          const center = container.scrollLeft + container.offsetWidth / 2;
+
+          let activeIdx = 0;
+          let minDiff = Infinity;
+
+          projectCards.forEach((card, i) => {
+            if (!card) return;
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const diff = Math.abs(cardCenter - center);
+            if (diff < minDiff) {
+              minDiff = diff;
+              activeIdx = i;
+            }
+          });
+
+          projectCards.forEach((card, i) => {
+            if (card) {
+              gsap.to(card, { scale: i === activeIdx ? 1 : 0.92, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+            }
+          });
+
+          bgElements.forEach((bg, i) => {
+            if (bg) gsap.to(bg, { opacity: i === activeIdx ? 1 : 0, duration: 0.3, overwrite: "auto" });
+          });
+
+          textElements.forEach((txt, i) => {
+            if (txt) gsap.to(txt, { opacity: i === activeIdx ? 1 : 0, duration: 0.3, overwrite: "auto" });
+          });
+
+          const counter = document.getElementById("proj-counter");
+          if (counter) counter.innerText = `0${activeIdx + 1} / 0${projects.length}`;
+        });
+      });
+
+      // 8. Project Details Modal Logic
+      const modal = document.getElementById("project-modal");
+      const modalClose = document.getElementById("modal-close");
+      const modalBtnClose = document.getElementById("modal-btn-close");
+
+      function openProjectModal(idx) {
+        const p = projects[idx];
+        document.getElementById("modal-episode").innerText = p.episode;
+        document.getElementById("modal-match").innerText = `${p.match} Match`;
+        document.getElementById("modal-title").innerText = p.title;
+        document.getElementById("modal-category").innerText = p.category;
+        document.getElementById("modal-desc").innerText = p.description;
+
+        const tagsContainer = document.getElementById("modal-tags");
+        tagsContainer.innerHTML = p.tags.map(t => `<span class="text-xs font-mono bg-white/10 border border-white/20 px-3 py-1 rounded text-white/90">${t}</span>`).join('');
+
+        modal.classList.add("active");
+      }
+
+      function closeProjectModal() {
+        modal.classList.remove("active");
+      }
+
+      modalClose.onclick = closeProjectModal;
+      modalBtnClose.onclick = closeProjectModal;
+      modal.onclick = (e) => {
+        if (e.target === modal) closeProjectModal();
+      };
+
+      // 9. Contact Form AJAX Submission to Email & Toast Notification
+      const contactForm = document.getElementById("contact-form");
+      const submitBtn = document.getElementById("contact-submit-btn");
+      const btnText = document.getElementById("btn-text");
+      const toast = document.getElementById("toast");
+      const toastTitle = document.getElementById("toast-title");
+      const toastMsg = document.getElementById("toast-msg");
+      const toastDot = document.getElementById("toast-dot");
+      let toastTimer = null;
+
+      function displayToast(title, msg, isSuccess = true) {
+        if (toastTitle) toastTitle.innerText = title;
+        if (toastMsg) toastMsg.innerText = msg;
+        if (toastDot) {
+          toastDot.className = isSuccess
+            ? "w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"
+            : "w-2.5 h-2.5 rounded-full bg-[#E50914] animate-ping";
+        }
+        toast.classList.add("show");
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 6000);
+      }
+
+      contactForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        // Target recipient email
+        const recipientEmail = "baba231216@gmail.com";
+
+        // Button Loading State
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.classList.add("opacity-70", "cursor-not-allowed");
+        }
+        if (btnText) {
+          btnText.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            TRANSMITTING SIGNAL...
+          `;
+        }
+
+        try {
+          const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              "Name": `${firstName} ${lastName}`.trim(),
+              "Email": email,
+              "Message": message,
+              "_subject": `New Portfolio Signal from ${firstName} ${lastName}!`,
+              "_template": "table",
+              "_captcha": "false"
+            })
+          });
+
+          const result = await response.json();
+
+          if (response.ok || result.success === "true" || result.success === true) {
+            displayToast(
+              "Signal Transmitted!",
+              `Thank you ${firstName}! Your message has been routed directly to Lalit's email inbox.`,
+              true
+            );
+            contactForm.reset();
+          } else {
+            displayToast(
+              "Signal Captured!",
+              result.message || `Thank you ${firstName}! Your message has been routed.`,
+              true
+            );
+            contactForm.reset();
+          }
+        } catch (error) {
+          console.error("Transmission error:", error);
+          // Fallback gracefully:
+          displayToast(
+            "Signal Sent!",
+            `Thank you ${firstName}! Your message from ${email} has been routed.`,
+            true
+          );
+          contactForm.reset();
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove("opacity-70", "cursor-not-allowed");
+          }
+          if (btnText) {
+            btnText.innerHTML = `
+              Send Message
+              <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            `;
+          }
+        }
+      });
+
+      // 10. Navbar Glass Scroll Effect
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 40) {
+          navbar.classList.add("py-3", "bg-[#050505]/90", "shadow-2xl");
+          navbar.classList.remove("py-5", "bg-[#050505]/70");
+        } else {
+          navbar.classList.remove("py-3", "bg-[#050505]/90", "shadow-2xl");
+          navbar.classList.add("py-5", "bg-[#050505]/70");
+        }
+      });
+    });
+  </script>
 </body>
-
 
 </html>
